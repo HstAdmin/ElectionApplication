@@ -19,10 +19,7 @@ namespace Hst.Voter.Controllers
         //private readonly IAuthenticationManager _authManager = null;
         protected readonly IHttpContextAccessor _httpContextAccessor;
         protected ISession _session;
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
 
         protected static string Token { get; set; }
 

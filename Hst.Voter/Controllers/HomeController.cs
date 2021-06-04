@@ -12,11 +12,11 @@ namespace Hst.Voter.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index(AppSettings configure)
+        public IActionResult Index()
         {
-            string value= configure.ConnectionString;
+            //string value= configure.ConnectionString;
 
-            return value;
+            return View();
         }
 
         public IActionResult About()

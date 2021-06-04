@@ -8,6 +8,7 @@ namespace Hst.Model
     public class AppSettings
     {
         public string Cuture { get; set; }
+        public string BaseUrl { get; set; }
         public static string Secret { get; set; }
         public int Expire { get; set; }
         public string ConnectionString { get; set; }

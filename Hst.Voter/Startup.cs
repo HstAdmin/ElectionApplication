@@ -40,11 +40,13 @@ namespace Hst.Voter
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            var appSettingSection = Configuration.GetSection("AppSettins");
+            var appSettingSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingSection);
             var appSettings = appSettingSection.Get<AppSettings>();
+            if (appSettings != null)
+                ApiPath.APIBaseUrl = appSettings.BaseUrl;
 
-            var key = Encoding.UTF8.GetBytes("");
+        var key = Encoding.UTF8.GetBytes("");
 
             services.AddLogging();
 
@@ -62,8 +64,6 @@ namespace Hst.Voter
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseAuthentication();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -73,7 +73,7 @@ namespace Hst.Voter
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -82,7 +82,7 @@ namespace Hst.Voter
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }
