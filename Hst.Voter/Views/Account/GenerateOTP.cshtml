@@ -3,10 +3,16 @@
     ViewData["Title"] = "GenerateOTP";
 }
 
-<h2>GenerateOTP</h2>
-@using (Html.BeginForm("GenerateOTP", "Account", FormMethod.Post))
-{
-    @Html.TextBoxFor(model => model.Mobile)
+<h2>LOGIN USING MOBILE NUMBER</h2>
+<form>
+    @using (Html.BeginForm("GenerateOTP", "Account", FormMethod.Post))
 
-    <button type="submit">Sent OTP</button>
-}
+    {
+           <div class="form-group">
+            @Html.TextBoxFor(model => model.Mobile)
+
+            <button class="btn-success">Sent OTP</button>
+            </div>
+            }
+    </form>
+

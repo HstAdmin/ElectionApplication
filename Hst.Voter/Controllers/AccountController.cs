@@ -14,7 +14,7 @@ namespace Hst.Voter.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return Redirect("~/account/generateotp");
         }
 
         public async Task<ActionResult> GenerateOTP(string mobile)

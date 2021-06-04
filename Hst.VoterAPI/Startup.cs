@@ -32,6 +32,7 @@ namespace Hst.VoterAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ApiPath.APIBaseUrl = Configuration.GetSection("appSettings:BaseUrl").Value;
             var appSettingSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingSection);
             var appSettings = appSettingSection.Get<AppSettings>();
@@ -91,6 +92,7 @@ namespace Hst.VoterAPI
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
