@@ -27,7 +27,7 @@ namespace Hst.Persistance.SQLConnection
         {
             try
             {
-                string connectionString = _configuration.GetSection("appSettings").GetSection("connection").Value;
+                string connectionString = _configuration.GetSection("appSettings").GetSection("ConnectionString").Value;
                 _connection = new SqlConnection(connectionString);
                 _connection.Open();
                 return _connection;

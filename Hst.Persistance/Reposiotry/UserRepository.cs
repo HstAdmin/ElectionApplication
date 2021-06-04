@@ -15,7 +15,7 @@ namespace Hst.Persistance.Reposiotry
     {
         protected readonly IConnectionfactory _connection = null;
         private const string spValidateUser = "hst.ValidateUser";
-        private const string spGenerateOTP = "hst.GenerateOTP";
+        private const string spGenerateOTP = "[dbo].[spGenerateOTP]";
         public UserRepository(IConnectionfactory connectionfactory)
         {
             _connection = connectionfactory;
@@ -27,14 +27,14 @@ namespace Hst.Persistance.Reposiotry
             using (var con = _connection.GetConnection())
             {
                 var param = new DynamicParameters();
-                param.Add("MobileNo", model, DbType.String, size: 20);
+                param.Add("MobileNo", model.Mobile, DbType.String, size: 20);
                 var data = await con.QueryAsync<UserModel>(
                      spGenerateOTP,
                      param,
                      commandType: CommandType.StoredProcedure);
                 var result = data.FirstOrDefault();
-                if (result != null)
-                    result.ErrorMessage = param.Get<string>("ErrorMessage");
+                //if (result != null)
+                //    result.ErrorMessage = param.Get<string>("ErrorMessage");
                 return result;
             }
         }

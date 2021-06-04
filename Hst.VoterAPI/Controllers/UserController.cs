@@ -18,13 +18,12 @@ namespace Hst.VoterAPI.Controllers
     public class UserController : BaseController
     {
         private readonly IUserService _service = null;
-        private readonly IAuthenticationManager _authManager = null;
-        public UserController(IHttpContextAccessor httpContextAccessor, ILoggerManager loggerManager, IConfiguration con, IUserService userService,
-            IAuthenticationManager authManager
+       // private readonly IAuthenticationManager _authManager = null;
+        public UserController(IHttpContextAccessor httpContextAccessor, ILoggerManager loggerManager, IConfiguration con, IUserService userService            
             ) :base(httpContextAccessor, loggerManager, con)
         {
             _service = userService;
-            _authManager = authManager;
+            //_authManager = authManager;
         }
 
 
@@ -57,8 +56,8 @@ namespace Hst.VoterAPI.Controllers
             {
                 if (string.IsNullOrEmpty(userDetails.ErrorMessage))
                 {
-                    userDetails.Token = _authManager.GenerateToken(userDetails, false);
-                    userDetails.RefreshToken = _authManager.GenerateToken(userDetails, true);
+                   // userDetails.Token = _authManager.GenerateToken(userDetails, false);
+                  //  userDetails.RefreshToken = _authManager.GenerateToken(userDetails, true);
                     return Response<UserModel>.CreateResponse(true, string.Empty, userDetails);
                 }
                 else
