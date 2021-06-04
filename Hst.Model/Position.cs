@@ -17,11 +17,11 @@ namespace Hst.Model
         [DataMember(Name = "EName")]
         public string P_ElectionName { get; set; }
         [DataMember]
-        public int  P_CreatedDate { get; set; }
+        public DateTime  P_CreatedDate { get; set; }
         [DataMember]
         public int  P_CreatedBy { get; set; }
         [DataMember]
-        public int  P_UpdatedDate { get; set; }
+        public DateTime  P_UpdatedDate { get; set; }
         [DataMember]
         public int  P_UpdatedBy { get; set; }
     }

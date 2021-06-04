@@ -27,6 +27,22 @@ namespace Hst.VoterAPI.Controllers
             _authManager = authManager;
         }
 
+
+
+        [Route("GenerateOTP")]
+        [HttpPost]
+        public async Task<ResponseData<UserModel>> GenerateOTP(UserModel model)
+        {
+            if (model != null && (string.IsNullOrEmpty(model.Mobile)))
+            {
+                return Response<UserModel>.CreateResponse(false, "Field should not be blank.", null);
+            }
+            var data = await _service.GenerateOTP(model);
+            return Response<UserModel>.CreateResponse(true, string.Empty, data);
+        }
+
+
+
         [Route("ValidateUser")]
         [HttpPost]
         public async Task<ResponseData<UserModel>> ValidateUser([FromBody] UserModel model)

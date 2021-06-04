@@ -21,10 +21,10 @@ namespace Hst.Model
         [DataMember(Name = "PositionId")]
         public int C_PositionId { get; set; }
         [DataMember(Name = "PositionName")]
-        public int C_PositionName { get; set; }
-        public int C_CreatedDate { get; set; }
+        public string C_PositionName { get; set; }
+        public DateTime C_CreatedDate { get; set; }
         public int C_CreatedBy { get; set; }
-        public int C_UpdatedDate { get; set; }
+        public DateTime C_UpdatedDate { get; set; }
         public int C_UpdatedBy { get; set; }
             
     } 

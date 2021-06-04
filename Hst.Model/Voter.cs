@@ -16,7 +16,7 @@ namespace Hst.Model
         [DataMember(Name = "OrgID")]
         public int V_OrganisationId { get; set; }
         [DataMember(Name = "OrgName")]
-        public int V_OrganisationName { get; set; }
+        public string V_OrganisationName { get; set; }
         [DataMember(Name = "EmailId")]
         public string V_EmailID { get; set; }
         [DataMember(Name = "MobileNo")]

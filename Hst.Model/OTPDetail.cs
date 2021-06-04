@@ -11,6 +11,6 @@ namespace Hst.Model
         public string O_OTP { get; set; }
         public DateTime O_StartDate { get; set; }
         public DateTime? O_EndDate { get; set; }
-        public int O_IsActive { get; set; }
+        public bool O_IsActive { get; set; }
     }
 }

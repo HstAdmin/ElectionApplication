@@ -37,6 +37,10 @@ namespace Hst.Business.Services
             return result;
         }
 
+
+
+
+
         //public UserViewModel GetById(int id)
         //{
         //    var data = _unitOfWork.UserRepository.GetByID(id);
@@ -73,12 +77,14 @@ namespace Hst.Business.Services
             return res;
         }
 
-        private string GenerateOtp()
-        {
-            Random generator = new Random();
-            int otp = generator.Next(111111, 999999);
-            return otp.ToString();
+
+        public async Task<UserModel> GenerateOTP(UserModel model)
+        { 
+            return await _unitOfWork.UserRepository.GenerateOTP(model);
         }
+
+
+
 
         public async Task<UserModel> CheckOtp(UserModel model)
         {

@@ -15,7 +15,7 @@ namespace Hst.Model
         [DataMember(Name = "OrgId")]
         public int E_OrganisationId { get; set; }
         [DataMember(Name = "OrgName")]
-        public int E_OrganisationName { get; set; }
+        public string E_OrganisationName { get; set; }
         public DateTime E_ScheduleDate { get; set; }
         public DateTime E_CreatedDate { get; set; }
         public int E_CreatedBy { get; set; }

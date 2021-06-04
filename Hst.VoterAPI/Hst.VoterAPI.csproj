@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Hst.Business\Hst.Business.csproj" />
     <ProjectReference Include="..\Hst.Logger\Hst.Logger.csproj" />
+    <ProjectReference Include="..\Hst.Utility\Hst.Utility.csproj" />
   </ItemGroup>
 
 

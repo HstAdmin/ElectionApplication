@@ -24,7 +24,7 @@ namespace Hst.Model.ViewModels
         public int GenderId { get; set; }
         public DateTime? DOB { get; set; }
         public string SchoolIds { get; set; }
-
+        public int? CustomerTypeId { get; set; }
         public string SocialType { get; set; }
         public string SocialId { get; set; }
         public int? UserTypeId { get; set; }

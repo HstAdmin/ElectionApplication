@@ -23,6 +23,6 @@ namespace Hst.Model
         [DataMember(Name = "StateID")]
         public int C_StateID { get; set; }
         [DataMember(Name = "StateName")]
-        public string StateName { get; set; }
+        public string C_StateName { get; set; }
     }
 }

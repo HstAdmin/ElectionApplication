@@ -1,0 +1,12 @@
+﻿@model Hst.Model.ViewModels.UserModel;
+@{
+    ViewData["Title"] = "GenerateOTP";
+}
+
+<h2>GenerateOTP</h2>
+@using (Html.BeginForm("GenerateOTP", "Account", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.Mobile)
+
+    <button type="submit">Sent OTP</button>
+}
