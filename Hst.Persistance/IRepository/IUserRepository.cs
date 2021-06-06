@@ -8,6 +8,7 @@ namespace Hst.Persistance.IRepository
 {
     public interface IUserRepository
     {
+        Task<UserModel> VerifyOTP(UserModel model);
         Task<UserModel> GenerateOTP(UserModel model);
         Task<UserModel> ValidateUser(string userName, string password);
         Task<UserModel> CheckUserExisting(UserModel model);

@@ -84,6 +84,12 @@ namespace Hst.Business.Services
         }
 
 
+        public async Task<UserModel> VerifyOTP(UserModel model)
+        {
+            return await _unitOfWork.UserRepository.VerifyOTP(model);
+        }
+
+
 
 
         public async Task<UserModel> CheckOtp(UserModel model)

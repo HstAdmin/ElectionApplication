@@ -3,12 +3,55 @@
     ViewData["Title"] = "GenerateOTP";
 }
 
-<h2>LOGIN USING MOBILE NUMBER</h2>
-<form method="post" asp-controller="Account" aspcontroller="Login">
-    <div>
-        <label asp-for="Mobile"></label>
-        <input asp-for="Mobile" />
-        <span asp-validation-for="Mobile"></span>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <form method="post" asp-controller="Account" aspcontroller="Login" class="box">
+                        <h1>Login</h1>
+                        <p class="text-muted">An OTP will be sent to your mobile number for verification</p>
+                        <input asp-for="Mobile" placeholder="Enter Mobile Number" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                        <button type="submit">
+                            @Html.ActionLink("Send OTP", "VerifyOTP", "Account", null, null)
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <input type="submit" value="Send OTP" />
-</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

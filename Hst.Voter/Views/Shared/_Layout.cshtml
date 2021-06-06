@@ -4,7 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Hst.Voter</title>
-
+    <link href="~/css/Style.css" rel="stylesheet" />
+    <link href="~/js/bootstrap.bundle.min.js" />
+    <link href="~/lib/jquery/dist/jquery.min.js" />
+    <link href="~/js/jquery.js" />
+    <link href="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -26,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Hst.Voter</a>
+                <a asp-area="" asp-controller="Account" asp-action="Login" class="navbar-brand">Hst.Voter</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -42,9 +48,9 @@
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
+        
         <footer>
-            <p>&copy; 2020 - Hst.Voter</p>
+            @*<p>&copy; 2020 - Hst.Voter</p>*@
         </footer>
     </div>
 

@@ -33,13 +33,32 @@ namespace Hst.Persistance.Reposiotry
                      param,
                      commandType: CommandType.StoredProcedure);
                 var result = data.FirstOrDefault();
-                //if (result != null)
-                //    result.ErrorMessage = param.Get<string>("ErrorMessage");
                 return result;
             }
         }
 
-     public async Task<UserModel> ValidateUser(string userName, string password)
+
+
+        public async Task<UserModel> VerifyOTP(UserModel model)
+        {
+            using (var con = _connection.GetConnection())
+            {
+                var param = new DynamicParameters();
+                param.Add("MobileNo", model.Mobile, DbType.String, size: 20);
+                param.Add("OTP", model.Otp, DbType.String, size: 6);
+                var data = await con.QueryFirstOrDefaultAsync<UserModel>(spGenerateOTP,
+                  param,
+                  commandType: CommandType.StoredProcedure);
+                var result = data;
+                return result;
+            }
+        }
+
+
+
+
+
+        public async Task<UserModel> ValidateUser(string userName, string password)
         {
             using (var con = _connection.GetConnection())
             {

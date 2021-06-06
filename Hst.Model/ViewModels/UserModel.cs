@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Hst.Model.ViewModels
@@ -9,8 +10,10 @@ namespace Hst.Model.ViewModels
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [Required (ErrorMessage = "Field is required")]
         public string Mobile { get; set; }
         public string UserName { get; set; }
+        [Required(ErrorMessage = "Field is required")]
         public string Otp { get; set; }
         public bool Retry { get; set; }
         public bool Status { get; set; }

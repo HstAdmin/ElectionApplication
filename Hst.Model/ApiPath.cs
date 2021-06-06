@@ -14,6 +14,7 @@ namespace Hst.Model
         public static class User
         {
             public static string GenerateOTP { get { return "api/User/GenerateOTP"; } }
+            public static string VerifyOTP { get { return "api/User/ValidateOTP"; } }
             public static string CheckUserExisting { get { return "api/User/CheckUserExisting"; } }
             public static string SendOtp { get { return "api/User/SendOtp"; } }
             public static string CheckOtp { get { return "api/User/CheckOtp"; } }

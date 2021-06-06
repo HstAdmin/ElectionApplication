@@ -23,21 +23,35 @@ namespace Hst.Voter.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(string mobile)
         {
-            Hst.Model.ViewModels.UserModel filters = new Hst.Model.ViewModels.UserModel();
-            filters.Mobile = mobile;
-            var result = await APIPostCaller<Hst.Model.ViewModels.UserModel, Hst.Model.ViewModels.UserModel>( ApiPath.User.GenerateOTP, filters);
-            if (result != null && result.Data != null && result.Data.Id > 0)
+            if (ModelState.IsValid)
             {
-                TempData["RegisterSM"] = "OTP sent successfully";
+                Hst.Model.ViewModels.UserModel filters = new Hst.Model.ViewModels.UserModel();
+                filters.Mobile = mobile;
+                var result = await APIPostCaller<Hst.Model.ViewModels.UserModel, Hst.Model.ViewModels.UserModel>(ApiPath.User.GenerateOTP, filters);
+                if (result != null && result.Data != null && result.Data.Id > 0)
+                {
+                    TempData["RegisterSM"] = "OTP sent successfully";
+                }
             }
-            //else
-            //{
-            // string message = result != null && result.Data != null && !string.IsNullOrEmpty(result.Data.ErrorMessage) ? result.Data.ErrorMessage : "Something went wrong.";
-            //  ModelState.AddModelError("RegisterError", message);
-            //   return View("Generate", model);
-            //}
-
-            return View();      
+            return View();
         }
+
+
+        public async Task<ActionResult> VerifyOTP(string OTP)
+        {
+            if (ModelState.IsValid)
+            {
+                Hst.Model.ViewModels.UserModel filters = new Hst.Model.ViewModels.UserModel();
+                filters.Otp = OTP;
+                var result = await APIPostCaller<Hst.Model.ViewModels.UserModel, Hst.Model.ViewModels.UserModel>(ApiPath.User.VerifyOTP, filters);
+                if (result != null && result.Data != null && result.Data.Id > 0)
+                {
+                    TempData["RegisterSM"] = "OTP Confirmed";
+                }
+            }
+            return View();
+
+        }
+
     }
 }

@@ -8,6 +8,7 @@ namespace Hst.Business.Services.Interfaces
 {
     public interface IUserService
     {
+        Task<UserModel> VerifyOTP(UserModel model);
         Task<UserModel> GenerateOTP(UserModel model);
         Task<UserModel> ValidateUser(string userName, string password);
         Task<UserModel> SaveUser(UserModel objModel);

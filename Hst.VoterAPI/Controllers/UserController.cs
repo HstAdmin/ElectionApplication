@@ -42,6 +42,22 @@ namespace Hst.VoterAPI.Controllers
 
 
 
+
+
+        [Route("VerifyOTP")]
+        [HttpPost]
+        public async Task<ResponseData<UserModel>> VerifyOTP(UserModel model)
+        {
+            var data = await _service.VerifyOTP(model);
+            return Response<UserModel>.CreateResponse(true, string.Empty, data);
+
+        }
+
+
+
+
+
+
         [Route("ValidateUser")]
         [HttpPost]
         public async Task<ResponseData<UserModel>> ValidateUser([FromBody] UserModel model)
