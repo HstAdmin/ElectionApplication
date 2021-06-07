@@ -15,7 +15,7 @@ namespace Hst.Persistance.Reposiotry
     {
         protected readonly IConnectionfactory _connection = null;
         private const string spValidateUser = "hst.ValidateUser";
-        private const string spGenerateOTP = "[dbo].[spGenerateOTP]";
+        private const string spGenerateOTP = "[dbo].[SP_GenerateOTP]";
         public UserRepository(IConnectionfactory connectionfactory)
         {
             _connection = connectionfactory;
@@ -84,7 +84,7 @@ namespace Hst.Persistance.Reposiotry
         {
             using (var con = _connection.GetConnection())
             {
-                var data = await con.QueryFirstOrDefaultAsync<UserModel>("");
+                var data = await con.QueryFirstOrDefaultAsync<UserModel>("SP_IsVoterExist");
                 return data;
             }
         }

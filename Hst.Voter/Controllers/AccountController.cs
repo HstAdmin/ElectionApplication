@@ -1,8 +1,7 @@
 ﻿using Hst.Model;
-using Hst.Model.Common;
 using Hst.Model.ViewModels;
+using Hst.Voter.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,14 +20,15 @@ namespace Hst.Voter.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Login(string mobile)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
-                Hst.Model.ViewModels.UserModel filters = new Hst.Model.ViewModels.UserModel();
-                filters.Mobile = mobile;
-                var result = await APIPostCaller<Hst.Model.ViewModels.UserModel, Hst.Model.ViewModels.UserModel>(ApiPath.User.GenerateOTP, filters);
-                if (result != null && result.Data != null && result.Data.Id > 0)
+                UserModel filters = new UserModel();
+                filters.Mobile = userViewModel.MobileNo;
+                var result = await APIPostCaller<UserModel, UserModel>(ApiPath.User.GenerateOTP, filters);
+                if (result != null && result.Data != null && !string.IsNullOrEmpty(result.Data.Otp))
                 {
                     TempData["RegisterSM"] = "OTP sent successfully";
                 }
@@ -36,14 +36,14 @@ namespace Hst.Voter.Controllers
             return View();
         }
 
-
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyOTP(string OTP)
         {
             if (ModelState.IsValid)
             {
-                Hst.Model.ViewModels.UserModel filters = new Hst.Model.ViewModels.UserModel();
+                UserModel filters = new UserModel();
                 filters.Otp = OTP;
-                var result = await APIPostCaller<Hst.Model.ViewModels.UserModel, Hst.Model.ViewModels.UserModel>(ApiPath.User.VerifyOTP, filters);
+                var result = await APIPostCaller<UserModel, UserModel>(ApiPath.User.VerifyOTP, filters);
                 if (result != null && result.Data != null && result.Data.Id > 0)
                 {
                     TempData["RegisterSM"] = "OTP Confirmed";
@@ -52,6 +52,12 @@ namespace Hst.Voter.Controllers
             return View();
 
         }
+
+        //[AcceptVerbs("GET","POST")]
+        //public async Task<IActionResult> IsMobileExist(string mobileNo)
+        //{
+        //    await APIPostCaller<UserModel, UserModel>(ApiPath.User.GenerateOTP, mobileNo);
+        //}
 
     }
 }
