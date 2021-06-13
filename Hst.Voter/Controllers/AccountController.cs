@@ -36,15 +36,16 @@ namespace Hst.Voter.Controllers
             return View();
         }
 
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyOTP(string OTP)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> VerifyOTP(UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
                 UserModel filters = new UserModel();
-                filters.Otp = OTP;
+                filters.Mobile = userViewModel.MobileNo;
+                filters.Otp = userViewModel.Otp;
                 var result = await APIPostCaller<UserModel, UserModel>(ApiPath.User.VerifyOTP, filters);
-                if (result != null && result.Data != null && result.Data.Id > 0)
+                if (result != null && result.Data != null && result.Data.Otp !=null)
                 {
                     TempData["RegisterSM"] = "OTP Confirmed";
                 }
@@ -52,6 +53,18 @@ namespace Hst.Voter.Controllers
             return View();
 
         }
+
+
+
+        public async Task<ActionResult> Hi()
+        {
+            return View();
+        }
+
+
+
+
+
 
         //[AcceptVerbs("GET","POST")]
         //public async Task<IActionResult> IsMobileExist(string mobileNo)

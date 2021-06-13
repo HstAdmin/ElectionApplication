@@ -9,6 +9,7 @@ namespace Hst.Business.UnitOfWork
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
+        IOrgRepository OrgRepository { get; }
       
     }
 }

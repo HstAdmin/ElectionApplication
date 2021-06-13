@@ -8,11 +8,15 @@ namespace Hst.Business.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         public UnitOfWork(
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            IOrgRepository orgRepository
             )
         {
             UserRepository = userRepository;
+            OrgRepository = orgRepository;
         }
         public IUserRepository UserRepository { get; }
+
+        public IOrgRepository OrgRepository { get; }
     }
 }

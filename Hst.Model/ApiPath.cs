@@ -11,7 +11,20 @@ namespace Hst.Model
         public static string ImageBasePath { get; set; }
 
 
-        public static class User
+        public static class Organisation
+        {
+
+            public static string GetStates { get { return "api/Org/GetStates"; } }
+            public static string GetCities(int StateId) { return "api/Org/GetCities/" + StateId; }
+            public static string GetOrganisation { get { return "api/Org/GetAll"; } }
+            public static string InsertUpdate { get { return "api/Org/InsertUpdate"; } }
+            public static string Delete(int id) { return "api/Org/Delete?id=" + id; }
+        }
+
+
+
+
+            public static class User
         {
             public static string GenerateOTP { get { return "api/User/GenerateOTP"; } }
             public static string IsUserExist { get { return "api/User/IsUserExist"; } }

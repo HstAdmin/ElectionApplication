@@ -8,7 +8,6 @@
 }
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,7 +27,8 @@
                         <input asp-for="MobileNo" placeholder="Enter Mobile Number" />
                         <span asp-validation-for="MobileNo" class="text-danger"></span>
                         <button type="submit">
-                           <a asp-controller="account" asp-action="login">Send OTP</a> 
+                            @*@Html.ActionLink("OTP", "VerifyOTP", "Account", null, null)*@
+                            <a asp-controller="account" asp-action="verifyotp">Send OTP</a>
                         </button>
                     </form>
                 </div>

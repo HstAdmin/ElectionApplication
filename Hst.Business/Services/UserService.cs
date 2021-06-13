@@ -6,6 +6,7 @@ using Hst.Model.ViewModels;
 using Hst.Utility;
 using Hst.Utility.EmailHelper;
 using Hst.Utility.SmsHelper;
+using Hst.Voter.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,11 +85,12 @@ namespace Hst.Business.Services
         }
 
 
-        public async Task<UserModel> VerifyOTP(UserModel model)
-        {
-            return await _unitOfWork.UserRepository.VerifyOTP(model);
-        }
 
+        public async Task<UserViewModel> VerifyOTP(UserViewModel model)
+        {
+            var result = await _unitOfWork.UserRepository.VerifyOTP(_mapper.Map<UserModel>(model));
+            return _mapper.Map<UserViewModel>(result);
+        }
 
 
 

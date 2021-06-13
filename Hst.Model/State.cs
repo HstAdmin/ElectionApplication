@@ -5,24 +5,23 @@ using System.Runtime.Serialization;
 
 namespace Hst.Model
 {
-
-   [DataContract]     
+    
    public class State
     {
-        [DataMember(Name ="StateId")]
+       // [DataMember(Name ="StateId")]
         public int S_ID { get; set; }
-        [DataMember(Name = "StateName")]
+       // [DataMember(Name = "StateName")]
         public string S_Name { get; set; }
     }
 
-    public class City {
-        [DataMember(Name = "CityId")]
+         public class City {
+        //[DataMember(Name = "CityId")]
         public int C_ID { get; set; }
-        [DataMember(Name = "CityName")]
+        //[DataMember(Name = "CityName")]
         public string C_Name { get; set; }
-        [DataMember(Name = "StateID")]
+        //[DataMember(Name = "StateID")]
         public int C_StateID { get; set; }
-        [DataMember(Name = "StateName")]
+        //[DataMember(Name = "StateName")]
         public string C_StateName { get; set; }
     }
 }

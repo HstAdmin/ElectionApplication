@@ -1,4 +1,7 @@
-﻿using Hst.Model.ViewModels;
+﻿
+using Hst.Model;
+using Hst.Model.ViewModels;
+using Hst.Voter.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +11,8 @@ namespace Hst.Business.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserModel> VerifyOTP(UserModel model);
+      
+        Task<UserViewModel> VerifyOTP(UserViewModel model);
         Task<UserModel> GenerateOTP(UserModel model);
         Task<UserModel> ValidateUser(string userName, string password);
         Task<UserModel> SaveUser(UserModel objModel);

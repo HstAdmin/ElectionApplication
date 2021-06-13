@@ -16,10 +16,27 @@ namespace Hst.Persistance.Reposiotry
         protected readonly IConnectionfactory _connection = null;
         private const string spValidateUser = "hst.ValidateUser";
         private const string spGenerateOTP = "[dbo].[SP_GenerateOTP]";
+        private const string spValidateOTP = "[dbo].[SP_ValidateOTP]"; 
         public UserRepository(IConnectionfactory connectionfactory)
         {
             _connection = connectionfactory;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         public async Task<UserModel> GenerateOTP(UserModel model)
@@ -45,18 +62,29 @@ namespace Hst.Persistance.Reposiotry
             {
                 var param = new DynamicParameters();
                 param.Add("MobileNo", model.Mobile, DbType.String, size: 20);
-                param.Add("OTP", model.Otp, DbType.String, size: 6);
-                var data = await con.QueryFirstOrDefaultAsync<UserModel>(spGenerateOTP,
+                param.Add("Otp", model.Otp, DbType.String, size: 6);
+                var data = await con.QueryFirstOrDefaultAsync<UserModel>(spValidateOTP,
                   param,
                   commandType: CommandType.StoredProcedure);
-                var result = data;
-                return result;
+                if (data != null)
+                {
+                    model.Status = true;
+                }
+                else
+                {
+                    model.Message = "OTP expired/invalid";
+                }
+                return model;
             }
         }
+         
+               
 
 
 
 
+
+  
 
         public async Task<UserModel> ValidateUser(string userName, string password)
         {

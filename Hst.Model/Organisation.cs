@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Hst.Model
 {
-    [DataContract]
+    
     public class Organisation
     {
         public int O_ID { get; set; }
@@ -16,4 +17,9 @@ namespace Hst.Model
         public  DateTime? O_UpdatedDate { get; set; }
         public  int O_UpdatedBy { get; set; }
     }
+
+
+
+
+    
 }

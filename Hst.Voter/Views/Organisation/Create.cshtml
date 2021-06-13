@@ -1,0 +1,129 @@
+﻿@model Hst.Model.Organisation
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+
+@*<div class="modal fade" id="addOrganisation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addOrganisationList">Add Organisation</h4>
+                    <button type="button" class="close" data-dismiss="">X</button>
+                </div>
+                <div class="modal-body">
+                    <form action="Create" method="post">
+                        <div class="form-group">
+                            <label asp-for="O_Name"></label>
+                            <label asp-for="O_Name" class="form-control"></label>
+                            <span asp-validation-for="O_Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="O_Address"></label>
+                            <label asp-for="O_Address" class="form-control"></label>
+                            <span asp-validation-for="O_Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="O_CityID"></label>
+                            <label asp-for="O_CityID" class="form-control"></label>
+                            <span asp-validation-for="O_CityID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="O_StateID"></label>
+                            <label asp-for="O_StateID" class="form-control"></label>
+                            <span asp-validation-for="O_StateID" class="text-danger"></span>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>*@
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Create Organisation</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.O_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.O_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.O_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.O_Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.O_Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.O_Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.O_StateID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.O_StateID, ViewBag.State as List<SelectListItem>, "---Select---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.O_StateID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.O_CityID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownListFor(model => model.O_CityID,null,"Select", new { @class = "form-control" })*@
+                <select asp-for="O_CityID" class="form-control">Please Select</select>
+                @Html.ValidationMessageFor(model => model.O_CityID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "OrganisationList")
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#O_StateID").change(function () {
+            $.get("/Organisation/GetCityList", { StateId: $("#O_StateID").val() }, function (data) {
+                $("#O_CityID").empty();
+                
+                $("#O_CityID").append("<option value=0>Please Select</option>");
+                $.each(data, function (index, value) {
+                    
+                    $("#O_CityID").append("<option value='" + value.c_ID +"'>"+ value.c_Name +"</option>")
+                })
+            })
+        })
+    })
+</script>

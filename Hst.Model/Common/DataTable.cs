@@ -1,4 +1,4 @@
-﻿//using Dapper;
+﻿using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,16 +37,16 @@ namespace Hst.Model.Common
         public Search search { get; set; }
         public List<Order> order { get; set; }
 
-        //public DynamicParameters GetParameters()
-        //{
-        //    var p = new DynamicParameters();
-        //    p.Add("OffSet", start);
-        //    p.Add("PageSize", length);
-        //    p.Add("SortBy", order != null ? columns[order[0].column].data : "");
-        //    p.Add("SortDirection", order != null ? order[0].dir.ToLower() : "");
-        //    p.Add("TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
-        //    return p;
-        //}
+        public DynamicParameters GetParameters()
+        {
+            var p = new DynamicParameters();
+            p.Add("OffSet", start);
+            p.Add("PageSize", length);
+            p.Add("SortBy", order != null ? columns[order[0].column].data : "");
+            p.Add("SortDirection", order != null ? order[0].dir.ToLower() : "");
+            p.Add("TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            return p;
+        }
     }
 
 

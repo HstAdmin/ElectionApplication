@@ -2,6 +2,7 @@
 using Hst.Logger;
 using Hst.Model.Common;
 using Hst.Model.ViewModels;
+using Hst.Voter.ViewModels;
 using Hst.VoterAPI.AuthModule;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,10 +47,10 @@ namespace Hst.VoterAPI.Controllers
 
         [Route("VerifyOTP")]
         [HttpPost]
-        public async Task<ResponseData<UserModel>> VerifyOTP(UserModel model)
+        public async Task<ResponseData<UserViewModel>> VerifyOTP(UserViewModel model)
         {
             var data = await _service.VerifyOTP(model);
-            return Response<UserModel>.CreateResponse(true, string.Empty, data);
+            return Response<UserViewModel>.CreateResponse(true, string.Empty, data);
 
         }
 

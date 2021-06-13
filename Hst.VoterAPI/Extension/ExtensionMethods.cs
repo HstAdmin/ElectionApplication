@@ -55,6 +55,8 @@ namespace Hst.VoterAPI.Extension
         public static void ConfigureDependency(this IServiceCollection services)
         {
             services.AddTransient<IConnectionfactory, SqlConnectionFactory>();
+            services.AddScoped<IOrgRepository, OrgRepository>();
+            services.AddScoped<IOrgService, OrgService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
