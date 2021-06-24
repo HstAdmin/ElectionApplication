@@ -1,0 +1,75 @@
+﻿@using Hst.Model
+@model IEnumerable<Election>
+@{
+    ViewData["Title"] = "GetElectionList";
+}
+
+<h2>GetElectionList</h2>
+
+
+<button style="float: right;">
+
+    @Html.ActionLink("CreateNew", "Create", "Election", null, null)
+</button>
+<table class="table table-bordered table-striped table-responsive" style="margin-top:50px">
+    <tr>
+        <th>
+            ElectionName
+        </th>
+        <th>
+            OrganisationName
+        </th>
+        <th>
+            StartDate
+        </th>
+        <th>
+            EndDate
+        </th>
+        <th>
+            IsActive
+        </th>
+
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            @using (Html.BeginForm("Delete", "Election", new { id = item.E_ID }))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.E_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrganisationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        <button>
+                            @Html.ActionLink("Edit", "Edit", "Election", new { id = item.E_ID }) 
+                        </button>
+                        <input type="submit" value="Delete" />
+
+                    </td>
+                </tr>
+
+            }
+        }
+
+    }
+
+    else
+    {
+        <td colspan="4" class="text-center"><b>No Data Available.Please Add Data By Click On Create Button</b></td>
+    }
+</table>     

@@ -11,7 +11,8 @@ namespace Hst.Business.Services.Interfaces
     public interface IOrgService
     {
         Task<ResponseData<Organisation>> InsertUpdate(Organisation model);
-        Task<ResponseData<Organisation>> Delete(Organisation model);
+        Task<ResponseData<Organisation>> Delete(int id);
+        Task<ResponseData<Organisation>> GetOrganisationByID(int id);
         Task<ResponseData<List<Organisation>>> GetOrganisation();
         Task<List<State>> GetStates();
         Task<List<City>> GetCities(int StateId);

@@ -35,10 +35,17 @@ namespace Hst.VoterAPI.Controllers
         public async Task<ResponseData<List<Organisation>>> GetOrganisation()
         {
               var result =await _service.GetOrganisation();
-            //return ResponseData<DataTableResult<List<Organisation>>>.CreateResponse(true, string.Empty, result);
               return result;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetOrgByID")]
+        public async Task<ResponseData<Organisation>> GetOrganisationByID(int id)
+        {
+            var result = await _service.GetOrganisationByID(id);
+            return result;
+        }
 
 
         [Route("GetStates")]
@@ -47,7 +54,6 @@ namespace Hst.VoterAPI.Controllers
         {
             var data = await _service.GetStates();
             return Response<List<State>>.CreateResponse(true, string.Empty, data);
-            // return data;
         }
 
         [Route("GetCities/{StateId}")]
@@ -70,7 +76,7 @@ namespace Hst.VoterAPI.Controllers
 
 
 
-[Route("InsertUpdateOrganisation")]
+        [Route("InsertUpdate")]
         [HttpPost]
         public async Task<ResponseData<Organisation>> InsertUpdate(Organisation model)
         {
@@ -84,19 +90,40 @@ namespace Hst.VoterAPI.Controllers
             
         }
 
-        [Route("DeleteOrganisation")]
+        [Route("Delete")]
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<ResponseData<Organisation>> Delete(Organisation model)
+        public async Task<ResponseData<Organisation>> Delete(int id)
         {
 
-            if (model.O_ID != 0)
+            if (id > 0)
             {
-                var data = await _service.Delete(model);
-                //return Response<Organisation>.CreateResponse(true, string.Empty, data);
-                return data;
+                var result = await _service.Delete(id);
+                return result;
+                
             }
             return Response<Organisation>.CreateResponse(false, "No Data to delete", null);
         }
 
+        
+
+        //[Route("Delete")]
+        //[HttpPost]
+        //public ResponseModel<string> Delete(int id)
+        //{
+        //    try
+        //    {
+        //        if (id > 0)
+        //        {
+        //            _service.Delete(id);
+        //            return new ResponseModel<string>() { Data = "Successfully updated" };
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ResponseModel<string>() { Data = "Error", ErrorMessage = ex.Message, TotalItems = 0 };
+        //    }
+        //    return null;
+        //}
     }
 }

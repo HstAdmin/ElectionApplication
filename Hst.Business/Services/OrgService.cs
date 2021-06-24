@@ -29,6 +29,10 @@ namespace Hst.Business.Services
             return await _unitOfWork.OrgRepository.GetOrganisation();
         }
 
+        public async Task<ResponseData<Organisation>> GetOrganisationByID(int id)
+        {
+            return await _unitOfWork.OrgRepository.GetOrganisationByID(id);
+        }
 
         public async Task<List<State>> GetStates()
         {
@@ -46,19 +50,22 @@ namespace Hst.Business.Services
             return await _unitOfWork.OrgRepository.InsertUpdate(model);
         }
 
-        public async Task<ResponseData<Organisation>> Delete(Organisation model)
+        public async Task<ResponseData<Organisation>> Delete(int id)
         {
-            return await _unitOfWork.OrgRepository.Delete(model);
+            return await _unitOfWork.OrgRepository.Delete(id);
         }
 
-        //Task<ResponseData<List<State>>> IOrgService.GetStates()
+
+
+
+
+
+        //public void Delete(int id)
         //{
-        //    throw new NotImplementedException();
+        //    _unitOfWork.OrgRepository.Delete(id);
         //}
 
-        //Task<ResponseData<List<City>>> IOrgService.GetCities(int StateId)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
+
     }
 }

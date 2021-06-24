@@ -1,0 +1,81 @@
+﻿@using Hst.Model
+@model IEnumerable<Candidate>
+@{
+    ViewData["Title"] = "CandidateList";
+}
+
+<h2>CandidateList</h2>
+
+<button style="float: right;">
+
+    @Html.ActionLink("CreateNew", "Create", "Candidate", null, null)
+</button>
+<table class="table table-bordered table-striped table-responsive" style="margin-top:50px">
+    <tr>
+        <th>
+            CandidateName
+        </th>
+        <th>
+            Post
+        </th>
+        <th>
+            Position
+        </th>
+        <th>
+            Mobile
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Designation
+        </th>
+
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            @using (Html.BeginForm("Delete", "Candidate", new { id = item.C_ID }))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.C_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.C_PositionId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.C_MobileNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.C_Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.C_Designation)
+                    </td>
+                    <td>
+                        <button>
+                            @Html.ActionLink("Edit", "Edit", "Candidate", new { id = item.C_ID })
+                        </button>
+                        <input type="submit" value="Delete" />
+
+                    </td>
+                </tr>
+
+            }
+        }
+
+    }
+
+    else
+    {
+        <td colspan = "4" class="text-center">
+        <b>No Data Available.Please Add Data By Click On Create Button</b></td>
+    }
+</table>    

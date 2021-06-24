@@ -1,8 +1,6 @@
-﻿
-using Hst.Business.Services;
+﻿using Hst.Business.Services;
 using Hst.Business.Services.Interfaces;
 using Hst.Business.UnitOfWork;
-
 using Hst.Model.Common;
 using Hst.Persistance.Infrastructure;
 using Hst.Persistance.IRepository;
@@ -55,9 +53,17 @@ namespace Hst.VoterAPI.Extension
         public static void ConfigureDependency(this IServiceCollection services)
         {
             services.AddTransient<IConnectionfactory, SqlConnectionFactory>();
+            services.AddScoped<IElectionPostCandiRepository, ElecPostCandiRepository>();
+            services.AddScoped<IElecPostCandiService, ElecPostCandiService>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<ICandidateRepository, CandidateRepository>();
+            services.AddScoped<ICandidateService, CandidateService>();
+            services.AddScoped<IElectionRepository, ElectionRepository>();
             services.AddScoped<IOrgRepository, OrgRepository>();
             services.AddScoped<IOrgService, OrgService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IElectionService, ElectionService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<Logger.ILoggerManager, Logger.LoggerManager>();

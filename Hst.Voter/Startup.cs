@@ -82,7 +82,7 @@ namespace Hst.Voter
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Organisation}/{action=OrganisationList}/{id?}");
+                    template: "{controller=Post}/{action=PostList}/{id?}");
             });
         }
     }

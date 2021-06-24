@@ -26,6 +26,8 @@ namespace Hst.Persistance.Reposiotry
 
         private const string spGetCity = "[dbo].[SP_GetCitesByState]";
 
+        private const string spGetOrgByID = "[dbo].[SP_GetOrgByID]";
+
         public OrgRepository(IConnectionfactory connectionfactory)
         {
             _connection = connectionfactory;
@@ -46,8 +48,22 @@ namespace Hst.Persistance.Reposiotry
             }
         }
 
-
-
+       
+        public async Task<ResponseData<Organisation>> GetOrganisationByID(int id)
+        {
+            ResponseData<Organisation> organisation = new ResponseData<Organisation>();
+            using (var con = _connection.GetConnection())
+            {
+                var param = new DynamicParameters();
+                param.Add("id", id, dbType: DbType.Int32);
+                var data = await con.QueryAsync<Organisation>(
+                    spGetOrgByID,
+                     param,
+                     commandType: CommandType.StoredProcedure);
+                organisation.Data = data.FirstOrDefault();
+                return organisation;
+            }
+        }
 
 
         public async Task<List<State>> GetStates()
@@ -76,44 +92,43 @@ namespace Hst.Persistance.Reposiotry
 
         public async Task<ResponseData<Organisation>> InsertUpdate(Organisation model)
         {
-            ResponseData<Organisation> organisation = new ResponseData<Organisation>();
-            using (var con = _connection.GetConnection())
+            try {
+                ResponseData<Organisation> organisation = new ResponseData<Organisation>();
+                using (var con = _connection.GetConnection())
+                {
+                    string Xml = ExtensionMethod.DataContractSerializeToString<Organisation>(model);
+                    var param = new DynamicParameters();
+                    param.Add("xml", Xml, dbType: DbType.Xml);
+                    var data = await con.QueryAsync<Organisation>(
+                         spCreateOrganisation,
+                         param,
+                         commandType: CommandType.StoredProcedure);
+                    organisation.Data = data.FirstOrDefault();
+                    //var result= data.FirstOrDefault();
+                    return organisation;
+                }
+            }
+            catch(Exception ex)
             {
-                string Xml = ExtensionMethod.DataContractSerializeToString<Organisation>(model);
+                return null;
+            }
+        }
+
+
+       public async Task<ResponseData<Organisation>> Delete(int id)
+        {
+            ResponseData<Organisation> organisation = new ResponseData<Organisation>();
+              using (var con = _connection.GetConnection())
+              {
                 var param = new DynamicParameters();
-                param.Add("xml", Xml, dbType: DbType.Xml);
-                var data = await con.QueryAsync <Organisation>(
-                     spCreateOrganisation,
+                param.Add("OrgId",id, dbType: DbType.Int32);
+                var data = await con.QueryAsync<Organisation>(
+                    spDeleteOrganisation,
                      param,
                      commandType: CommandType.StoredProcedure);
                 organisation.Data = data.FirstOrDefault();
                 return organisation;
             }
-        }
-
-
-
-
-
-
-
-        public async Task<ResponseData<Organisation>> Delete(Organisation model)
-        {
-            using (var con = _connection.GetConnection())
-            {
-
-                var param = new DynamicParameters();
-                param.Add("OrgId", model.O_ID, dbType: DbType.Int32);
-                var data = await con.QueryAsync<ResponseData<Organisation>>(
-                    spDeleteOrganisation,
-                     param,
-                     commandType: CommandType.StoredProcedure);
-                var result = data.FirstOrDefault();
-                return result;
-            }
-
-
-
         }
 
         public Task<List<City>> GetCities()
@@ -125,9 +140,5 @@ namespace Hst.Persistance.Reposiotry
 
 
 
-        //public Task<Organisation> InsertUpdate(Organisation model)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Hst.Logger;
+using Hst.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

@@ -10,6 +10,9 @@ namespace Hst.Business.UnitOfWork
     {
         IUserRepository UserRepository { get; }
         IOrgRepository OrgRepository { get; }
-      
+        IElectionRepository ElectionRepository { get; }
+        ICandidateRepository CandidateRepository { get; }
+        IPostRepository PostRepository { get; }
+        IElectionPostCandiRepository ElecPostCandiRepository { get; }
     }
 }

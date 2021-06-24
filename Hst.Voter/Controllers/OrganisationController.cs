@@ -1,6 +1,7 @@
 ﻿using Hst.Model;
 using Hst.Model.Common;
 using Hst.Model.ViewModels;
+using Hst.Persistance.Reposiotry;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,132 +19,129 @@ namespace Hst.Voter.Controllers
             return View();
         }
 
+
+        //*************GET******************
         [HttpGet]
         public async Task<IActionResult> OrganisationList()
         {
-            
-            
             var result = await APIGetCaller<List<Organisation>>(ApiPath.Organisation.GetOrganisation);
-            if (result != null) {
+            if (result != null)
+            {
                 return View("OrganisationList", result.Data);
             }
-            else {
+            else
+            {
                 return View();
             }
-              
+
         }
-
-
-
-        public async Task<IActionResult> GetStates()
-        {
-            var result = await APIGetCaller<List<DropDownVM>>(ApiPath.Organisation.GetStates);
-            ViewBag.Countries = result;
-            return Json(result.Data ?? new List<DropDownVM>());
-        }
-
-
-
-
-
-
-
-
-
 
 
         public async Task<IActionResult> GetCityList(int StateId)
-
         {
             var res = await APIGetCaller<List<City>>(ApiPath.Organisation.GetCities(Convert.ToInt32(StateId)));
-            
+
             if (res != null)
             {
-            
+
                 return Json(res.Data ?? new List<City>());
-                //List<SelectListItem> licities = new List<SelectListItem>();
-                //return Json(res.Data ?? new List<City>().Where(City => City.C_StateID== StateId).ToList());
-                //ViewBag.City = res.Data != null ? res.Data.Select(c => new SelectListItem() { Text = c.C_Name, Value = c.C_ID.ToString() }).ToList() : new List<SelectListItem>();
-                //    foreach (var x in res)
-                //    {
-                //        licities.Add(new SelectListItem { Text = x.C_Name, Value = x.C_ID.ToString() });
-                //    }
-                //}
-                //return Json(new SelectList(licities, "Text", "Value"));
             }
             return View();
         }
 
 
-
-
-
-
-
-
-
+        //*************INSERT/CREATE******************
         [AllowAnonymous]
         public async Task<IActionResult> Create()
         {
             var result = await APIGetCaller<List<State>>(ApiPath.Organisation.GetStates);
-            if (result != null )
+            if (result != null)
             {
 
-                ViewBag.State = result.Data != null? result.Data.Select(c => new SelectListItem() { Text = c.S_Name, Value = c.S_ID.ToString() }).ToList():new List<SelectListItem>();
+                ViewBag.State = result.Data != null ? result.Data.Select(c => new SelectListItem() { Text = c.S_Name, Value = c.S_ID.ToString() }).ToList() : new List<SelectListItem>();
 
             }
-            //ViewBag.State = result.Data;
             return View();
         }
-       
 
-       [AllowAnonymous]
-       [HttpPost]
+
+        [AllowAnonymous]
+        [HttpPost]
         public async Task<ActionResult> Create(Organisation model)
         {
             if (ModelState.IsValid)
             {
-                //Organisation filters = new Organisation();
-                //filters.O_ID =1;
-                //var result = await APIPostCaller<Organisation, Organisation>(ApiPath.Organisation.InsertUpdate, model);
-                //if (result != null && result.Data != null)
-                model.O_ID = 0;
-                var result = await APIPostCaller<Organisation, int>(ApiPath.Organisation.InsertUpdate, model);
-                return Json(result);
+                model.O_CreatedDate = model.O_ID > 0 ? model.O_CreatedDate : DateTime.Now;
+                model.O_UpdatedDate = DateTime.Now;
+                var result = await APIPostCaller<Organisation, Organisation>(ApiPath.Organisation.InsertUpdate, model);
+                if (result != null && result.Data != null)
+                    return RedirectToAction("OrganisationList", result);
                 {
                     TempData["RegisterSM"] = "Data Inserted successfully";
+
                 }
             }
             return View();
         }
 
-        public async Task<ActionResult> Edit(int id)
+
+        //************* EDIT******************
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id,int StateId)
         {
-            if (ModelState.IsValid)
+            
+            var res= await APIGetCaller<List<State>>(ApiPath.Organisation.GetStates);
+            //var cityres = await APIGetCaller<List<City>>(ApiPath.Organisation.GetCities(Convert.ToInt32(StateId)));
+            var result = await APIGetCaller<Organisation>(ApiPath.Organisation.GetOrganisationByID(Convert.ToInt32(id)));
+            if (result != null)
             {
-                Organisation filters = new Organisation();
-                filters.O_ID = id;
-                var result = await APIPostCaller<Organisation, Organisation>(ApiPath.Organisation.InsertUpdate, filters);
-                if (result != null && result.Data != null)
+                if (res != null)
                 {
-                    TempData["RegisterSM"] = "Data updated successfully";
+                    //if (cityres != null)
+                    //{
+                    //    return Json(cityres.Data ?? new List<City>());
+                    //}
+                    ViewBag.State = res.Data != null ? res.Data.Select(c => new SelectListItem() { Text = c.S_Name, Value = c.S_ID.ToString() }).ToList() : new List<SelectListItem>();
                 }
+                return View("Edit", result.Data);
             }
-            //return View();
-            return RedirectToAction("OrganisationList");
-        }
-
-
-
-
-         public async Task<ActionResult> Delete(int id)
-            {
-                var result = await APIPostCaller<string, string>(ApiPath.Organisation.Delete(id), string.Empty);
-                return Json(result);
-            }
+            return View();
             
         }
 
 
+        [AllowAnonymous]
+        public async Task<IActionResult> Edit(int id, Organisation model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.O_CreatedDate = model.O_ID < 0 ? model.O_CreatedDate : DateTime.Now;
+                model.O_UpdatedDate = DateTime.Now;
+                var result = await APIPostCaller<Organisation, Organisation>(ApiPath.Organisation.InsertUpdate, model);
+                if (result != null && result.Data != null)
+
+                {
+                    return RedirectToAction("OrganisationList", result);
+                }
+            }
+            return View();
+        }
+
+
+        //*************DELETE******************
+        [HttpPost]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var result = await APIPostCaller<string, string>(ApiPath.Organisation.Delete(id), string.Empty);
+            return RedirectToAction("OrganisationList", result.Data);
+
+        }
+
+
+
     }
+
+
+}
 

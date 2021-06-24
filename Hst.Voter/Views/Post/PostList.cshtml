@@ -1,0 +1,58 @@
+﻿@using Hst.Model
+@model IEnumerable<Post>
+@{
+    ViewData["Title"] = "PostList";
+}
+
+<h2>PostList</h2>
+
+<button style="float: right;">
+
+    @Html.ActionLink("CreateNew", "Create", "Post", null, null)
+</button>
+<table class="table table-bordered table-striped table-responsive" style="margin-top:50px">
+    <thead>
+        <tr>
+            <th>
+                PostName
+            </th>
+            <th>
+                ElectionName
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            @using (Html.BeginForm("Delete", "Post", new { id = item.P_ID }))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.P_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ElectionName)
+                    </td>
+                    <td>
+                        <button>
+                            @Html.ActionLink("Edit", "Edit", "Post", new { id = item.P_ID })
+                        </button>
+                        <input type="submit" value="Delete" />
+
+                    </td>
+                </tr>
+
+            }
+        }
+
+    }
+
+    else
+    {
+        <td colspan="4" class="text-center">
+            <b>No Data Available.Please Add Data By Click On Create Button</b>
+        </td>
+    }
+</table>    

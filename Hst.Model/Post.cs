@@ -6,13 +6,15 @@ using System.Text;
 
 namespace Hst.Model
 {
-    [Table("Post")]
     public class Post
     {
-        [Key]
-        public int P_Id { get; set; }
+        public int P_ID { get; set; }
         public string P_Name { get; set; }
-        public int? P_EId { get; set; }
-        public virtual Election Election { get; set; }
+        public int P_EId { get; set; }
+        public string ElectionName { get; set; }
+        public DateTime P_CreatedDate { get; set; }
+        public int P_CreatedBy { get; set; }
+        public DateTime P_UpdatedDate { get; set; }
+        public int P_UpdatedBy { get; set; }
     }
 }

@@ -1,37 +1,36 @@
 ﻿@model Hst.Model.Organisation
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Create</h2>
-
+<h2>Edit</h2>
 
 @if (ViewBag.Message != null)
 {
+
     <div class="alert alert-success" role="alert">
         @ViewBag.Message
     </div>
 }
 
 
-
-
-
-@using (Html.BeginForm("Create", "Organisation", FormMethod.Post))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h2>Create Organisation</h2>
+        <h2>Edit Organisation</h2>
         <hr />
         <div class="container-fluid" style="margin: auto; width: 50%; padding: 10px;">
             <div class="row">
                 <div class="col-md-12">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group" >
+                    @Html.HiddenFor(model => model.O_ID)
+
+                    <div class="form-group">
                         <label class="control-label col-md-2">Name:</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.O_Name, new { htmlAttributes = new { @class = "form-control" , autocomplete = "off" } })
+                            @Html.EditorFor(model => model.O_Name, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.O_Name, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -39,7 +38,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Address:</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.O_Address, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.EditorFor(model => model.O_Address, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.O_Address, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -58,14 +57,16 @@
                             @Html.ValidationMessageFor(model => model.O_CityID, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                            <input type="submit" value="Save" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 }
 
@@ -74,7 +75,6 @@
 </div>
 
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
         $("#O_StateID").change(function () {
@@ -82,8 +82,8 @@
                 $("#O_CityID").empty();
                 $("#O_CityID").append("<option value=0>Please Select</option>");
                 $.each(data, function (index, value) {
-                    
-                    $("#O_CityID").append("<option value='" + value.c_ID +"'>"+ value.c_Name +"</option>")
+
+                    $("#O_CityID").append("<option value='" + value.c_ID + "'>" + value.c_Name + "</option>")
                 })
             })
         })

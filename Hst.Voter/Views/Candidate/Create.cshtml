@@ -1,0 +1,78 @@
+﻿@model Hst.Model.Candidate
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Candidate", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Create Candidate</h2>
+        <hr />
+        <div class="container-fluid" style="margin: auto; width: 50%; padding: 10px;">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Name:</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.C_Name, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.C_Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Post:</label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.C_PostId, ViewBag.Post as List<SelectListItem>, "---Select---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.C_PostId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Position:</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.C_PositionId, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.C_PositionId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Mobile:</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.C_MobileNo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.C_MobileNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Address:</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.C_Address, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.C_Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Designation:</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.C_Designation, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.C_Designation, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<button>
+    @Html.ActionLink("Back to List", "CandidateList")
+</button>
+
