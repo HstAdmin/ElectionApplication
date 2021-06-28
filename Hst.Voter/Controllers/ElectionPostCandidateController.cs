@@ -60,7 +60,7 @@ namespace Hst.Voter.Controllers
                 
                 var res = await APIPostCaller<List<Result>, Result>(ApiPath.ECP.SaveData, result);
                 if (res != null && res.Data != null)
-                    return RedirectToAction("ResultList", result);
+                    return RedirectToAction("ResultList", res);
                 {
                     TempData["RegisterSM"] = "Data Inserted successfully";
 
