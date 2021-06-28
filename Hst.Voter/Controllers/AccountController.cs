@@ -1,5 +1,6 @@
 ﻿using Hst.Model;
 using Hst.Model.ViewModels;
+using Hst.Voter.Models;
 using Hst.Voter.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,7 @@ namespace Hst.Voter.Controllers
                 var result = await APIPostCaller<UserModel, UserModel>(ApiPath.User.VerifyOTP, filters);
                 if (result != null && result.Data != null && result.Data.Otp !=null)
                 {
+                    VoterModel.VoterID = result.Data.Id;
                     TempData["RegisterSM"] = "OTP Confirmed";
                 }
             }

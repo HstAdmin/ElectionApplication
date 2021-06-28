@@ -25,5 +25,15 @@ namespace Hst.Business.Services
         {
             return await _unitOfWork.ElecPostCandiRepository.GetElectionCandidates(Id);
         }
+
+        public async Task<ResponseData<Result>> SaveData(List<Result> model)
+        {
+            return await _unitOfWork.ElecPostCandiRepository.SaveData(model);
+        }
+        public async Task<ResponseData<List<Result>>> GetResult()
+        {
+            return await _unitOfWork.ElecPostCandiRepository.GetResult();
+        }
+        
     }
 }

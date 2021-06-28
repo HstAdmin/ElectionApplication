@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Result>
+@{
+    ViewData["Title"] = "ResultList";
+}
+
+<h2>ResultList</h2>
+
+<table class="table table-bordered table-striped table-responsive" style="margin-top:50px">
+    <tr>
+        <th>
+            Election
+        </th>
+        <th>
+            Post
+        </th>
+        <th>
+            Candidate
+        </th>
+        <th>
+            VoterId
+        </th>
+
+
+    </tr>
+
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.R_ElectionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.R_PostId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.R_CandidateId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.R_VoterId)
+                </td>
+                
+            </tr>
+
+        }
+    }
+
+
+
+    else
+    {
+        <td colspan="4" class="text-center"><b>No Data Available</b></td>
+    }
+</table>     

@@ -47,6 +47,14 @@ namespace Hst.Model
             public static string GetPost { get { return "api/Candi/GetPost"; } }
             public static string Delete(int Id) { return "api/Candi/Delete?Id=" + Id; }
         }
+         
+        public static class ECP
+        {
+            public static string GetElectionCandidates(int Id) { return "api/ElecPostCandi/GetElectionCandidates?Id="+Id; }
+            public static string SaveData { get { return "api/ElecPostCandi/SaveData"; } }
+            public static string GetResult { get { return "api/ElecPostCandi/GetAll"; } }
+        }
+
 
         public static class User
         {

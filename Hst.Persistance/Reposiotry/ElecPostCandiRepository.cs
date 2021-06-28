@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Hst.Persistance.Reposiotry
 {
-    public class ElecPostCandiRepository:IElectionPostCandiRepository
+    public class ElecPostCandiRepository : IElectionPostCandiRepository
     {
         protected readonly IConnectionfactory _connection = null;
 
@@ -21,6 +21,10 @@ namespace Hst.Persistance.Reposiotry
             _connection = connectionfactory;
         }
         private const string spGetElectionCandidates = "[sp_GetElectionCandidates]";
+        private const string spSaveResult = "[sp_SaveResult]";
+        private const string spGetResult = "[dbo].[SP_GetResult]";
+
+
 
 
         public async Task<ResponseData<ElectionCandidatePost>> GetElectionCandidates(int Id)
@@ -37,17 +41,52 @@ namespace Hst.Persistance.Reposiotry
                 var electionCandidate = reader.Read<ElectionCandidate>();
                 foreach (ElectionPosts post in electionPost)
                 {
-                    post.electionCandidates = electionCandidate.Where(r => r.PostID == post.PostID).ToList();
+                    post.ElectionCandidates = electionCandidate.Where(r => r.PostID == post.PostID).ToList();
                 }
                 foreach (ElectionCandidatePost election in electionPostCandidate)
                 {
-                    election.electionPosts = electionPost.Where(s => s.ElectionID == election.ElectionID).ToList();
+                    election.ElectionPosts = electionPost.Where(s => s.ElectionID == election.ElectionID).ToList();
                 }
                 ecp.Data = electionPostCandidate.FirstOrDefault();
                 return ecp;
-                
+
             }
         }
-    }
-}
 
+
+        public async Task<ResponseData<List<Result>>> GetResult()
+        {
+            using (var con = _connection.GetConnection())
+            {
+                var result = await con.QueryAsync<Result>(spGetResult, null, commandType: CommandType.StoredProcedure);
+                var list = result.ToList();
+
+                return new ResponseData<List<Result>>() { Data = list };
+            }
+        }
+
+
+        public async Task<ResponseData<Result>> SaveData(List<Result> model)
+        { 
+                try
+                {
+                    ResponseData<Result> result = new ResponseData<Result>();
+                    using (var con = _connection.GetConnection())
+                    {
+                        string Xml = ExtensionMethod.DataContractSerializeToString<List<Result>>(model);
+                        var param = new DynamicParameters();
+                        param.Add("xml", Xml, dbType: DbType.Xml);
+                        var data = await con.QueryAsync<Result>(
+                             spSaveResult, param, commandType: CommandType.StoredProcedure);
+                        result.Data = data.FirstOrDefault();
+                        return result;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
+            }
+
+        }
+}

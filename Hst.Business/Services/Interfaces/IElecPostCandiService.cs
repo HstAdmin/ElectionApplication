@@ -12,5 +12,7 @@ namespace Hst.Business.Services.Interfaces
     public interface IElecPostCandiService
     {
         Task<ResponseData<ElectionCandidatePost>> GetElectionCandidates(int Id);
+        Task<ResponseData<Result>> SaveData(List<Result> model);
+        Task<ResponseData<List<Result>>> GetResult();
     }
 }

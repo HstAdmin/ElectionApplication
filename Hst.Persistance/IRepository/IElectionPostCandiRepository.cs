@@ -10,5 +10,7 @@ namespace Hst.Persistance.IRepository
     public interface IElectionPostCandiRepository
     {
         Task<ResponseData<ElectionCandidatePost>> GetElectionCandidates(int Id);
+        Task<ResponseData<Result>> SaveData(List<Result> model);
+        Task<ResponseData<List<Result>>> GetResult();
     }
 }
